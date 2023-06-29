@@ -28,6 +28,19 @@ db.on('error', (error) => {
 // Set the port
 const port = process.env.PORT || 3000;
 
+const path = require('path');
+
+// Serve static files from the React build folder
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+// Serve static files from the React build folder
+app.use(express.static(path.join(__dirname, '../crm-frontend/build')));
+
+// Handle requests for all routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../crm-frontend/build', 'index.html'));
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
